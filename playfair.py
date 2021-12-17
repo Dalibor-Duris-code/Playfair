@@ -5,9 +5,9 @@ import itertools
 Abeceda = string.ascii_uppercase.replace('W', 'V') #velka abeceda nahrada W za V
 
 def textUpr(text: str): # uprava textu bez znamienok a velke pismena zmena W na V
+    text = text.replace('W', 'V')
     text = unidecode.unidecode(text)
     text = text.upper()
-    text = text.replace('W', 'V')
     return text
 
 def space(text:str):
@@ -105,9 +105,6 @@ def encode(vstupText, kluc):
     sifrovany = ''
     text = ''
 
-    # if len(vstupText) < 2:  #ošetrenie na dvojicky ked to nie je dvojica
-    #     return vstupText
-
     for i in range(len(vstupText) - 1):
         text += vstupText[i]
         if vstupText[i] == vstupText[i + 1]:
@@ -118,7 +115,7 @@ def encode(vstupText, kluc):
         text += 'X'
 
     vstupText = text
-
+    vstupText = textUpr(vstupText)  #uprava textu vstup
     for znak, znak1 in delic(vstupText):
         riadok1, stlpec1 = divmod(matrix.index(znak), 5)
         riadok2, stlpec2 = divmod(matrix.index(znak1), 5)
@@ -163,7 +160,7 @@ def rozdelenie(vstup, pocet):
     return ' '.join(vstup[i:i+pocet] for i in range(0,len(vstup),pocet))
 
 def main():
-    text = 'xena je pica riadx'
+    text = 'Kryptologia je skurvena pičovina ktora nech páli do piči wX kokotko'
     kluc = 'Playfair'
     picovina = encode(text,kluc)
     jebe = (rozdelenie(picovina,5))
