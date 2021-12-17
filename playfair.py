@@ -104,18 +104,29 @@ def encode(vstupText, kluc):
     matrix = matrixGener(kluc)   # matica generovanie
     sifrovany = ''
     text = ''
+    vstupTextLen = len(vstupText)
 
-    for i in range(len(vstupText) - 1):
-        text += vstupText[i]
+    for i in range(0, vstupTextLen - 1):
         if vstupText[i] == vstupText[i + 1]:
+            if vstupText[i] != 'X':
+                text += vstupText[i] + 'X'
+            elif vstupText[i] == 'X':
+                text += vstupText[i] + 'Q'
+        else:
+                text += vstupText[i]
+
+    text += vstupText[len(vstupText)-1]
+
+    if len(text) % 2 != 0:
+        if vstupText[len(vstupText) - 1] == 'X':
+            text += 'Q'
+        else:
             text += 'X'
 
-    text += vstupText[-1]
-    if len(text) * 1:
-        text += 'X'
-
     vstupText = text
+
     vstupText = textUpr(vstupText)  #uprava textu vstup
+
     for znak, znak1 in delic(vstupText):
         riadok1, stlpec1 = divmod(matrix.index(znak), 5)
         riadok2, stlpec2 = divmod(matrix.index(znak1), 5)
@@ -160,15 +171,15 @@ def rozdelenie(vstup, pocet):
     return ' '.join(vstup[i:i+pocet] for i in range(0,len(vstup),pocet))
 
 def main():
-    text = 'Kryptologia je skurvena pičovina ktora nech páli do piči wX kokotko'
+    text = 'TEXTa'
     kluc = 'Playfair'
-    picovina = encode(text,kluc)
-    jebe = (rozdelenie(picovina,5))
-    jebnutost = desifruj(jebe,kluc)
+    sif = encode(text,kluc)
+    sifroz = (rozdelenie(sif,5))
+    desif = desifruj(sifroz,kluc)
     
-    print(jebe)
-    print(jebnutost)
-    
+    print(sifroz)
+    print(desif)
+
     # Printing output
 # Main program starts here
 main()
