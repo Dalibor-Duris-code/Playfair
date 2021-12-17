@@ -92,12 +92,12 @@ def matrixGener(kluc):  #generovanie matice
         for symbol in kluc:
             if symbol not in znaky:
                 znaky.append(symbol)    #symbol do znaku
-    for j in range(5):
-        matrix[i][j] = znaky[5 * i + j]
+    # for j in range(5):
+    #     matrix[i][j] = znaky[5 * i + j]
 
     return znaky
  
-def encode(vstupText, kluc):
+def sifruj(vstupText, kluc):
     vstupText = textUpr(vstupText)  #uprava textu vstup
     vstupText = replaceNumber(vstupText)
     vstupText = replaceSpace(vstupText)
@@ -142,6 +142,7 @@ def encode(vstupText, kluc):
             sifrovany += matrix[riadok1 * 5 + stlpec2]
             sifrovany += matrix[riadok2 * 5 + stlpec1]
 
+    sifrovany = rozdelenie(sifrovany,5)
     return sifrovany
 
 def desifruj(sifrovany, kluc):
@@ -173,7 +174,7 @@ def rozdelenie(vstup, pocet):
 def main():
     text = 'TEXTa'
     kluc = 'Playfair'
-    sif = encode(text,kluc)
+    sif = sifruj(text,kluc)
     sifroz = (rozdelenie(sif,5))
     desif = desifruj(sifroz,kluc)
     
